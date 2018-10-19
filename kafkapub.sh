@@ -13,9 +13,6 @@ schema=$(curl -X GET -s ${schema_registry_url%/}/subjects/${topic_name}-value/ve
     python3 -c "import sys, json; print(json.load(sys.stdin)['schema'])" | 
     sed 's/"/\\"/g' ) #the full json schema must be escaped
 
-escaped_schema=$(echo "${schema}" | sed 's/"/\\"/g')
-#printf "escaped_schema:\n${escaped_schema}\n"
-
 message=$(cat ${message_file} | \
     python3 -c "import sys, json; print(json.dumps(json.load(sys.stdin)))")
 
