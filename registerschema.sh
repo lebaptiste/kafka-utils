@@ -12,6 +12,9 @@ schema_value=$(cat "${avro_file}" |
     python3 -c "import sys, json; print(json.dumps(json.load(sys.stdin)))" | 
     sed 's/"/\\"/g' ) #the full json schema must be escaped
 
-curl -X POST -v --show-error -H "Content-Type: application/vnd.schemaregistry.v1+json" \
+curl -X POST --show-error \
+    -H "Content-Type: application/vnd.schemaregistry.v1+json" \
     --data '{ "schema":"'"${schema_value}"'"}' \
-     ${schema_registry_url%/}/subjects/${topic_name}-value/versions
+    ${schema_registry_url%/}/subjects/${topic_name}-value/versions
+
+echo
